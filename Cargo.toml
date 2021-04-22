@@ -3,9 +3,18 @@ name = "home-item-numbers-notifier"
 version = "0.1.0"
 authors = ["Hipy Cas <hipycas@gmail.com>"]
 edition = "2018"
+default-run = "customfiles"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 home = "0.5.3"
 notify-rust = "4"
+
+[[bin]]
+name = "customfiles"
+path = "src/main.rs"
+
+[[bin]]
+name = "installer"
+path = "src/installer.rs"
